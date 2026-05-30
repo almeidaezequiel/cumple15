@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felices 15 ✦</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Cinzel:wght@400;600;700&family=Crimson+Pro:ital,wght@0,300;1,300&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --navy:    #0B1020;
+    --navy2:   #1A2540;
+    --burgundy:#5A1128;
+    --wine:    #7A1224;
+    --carbon:  #111111;
+    --beige:   #F4C9A0;
+    --gold:    #FFD700;
+    --gold2:   #E6B800;
+    --glass:   rgba(10,14,30,0.82);
+    --glass2:  rgba(26,37,64,0.55);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  /* ══════════════════════════════════════
+     INTRO SCREEN
+  ══════════════════════════════════════ */
+  #intro {
+    position: fixed; inset: 0; z-index: 9999;
+    background: var(--carbon);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+    transition: opacity 1.2s ease, visibility 1.2s ease;
+  }
+  #intro.fade-out { opacity: 0; visibility: hidden; }
+
+  /* Stars intro */
+  .intro-stars { position: absolute; inset: 0; pointer-events: none; }
+  .intro-star {
+    position: absolute;
+    width: 2px; height: 2px;
+    background: #fff;
+    border-radius: 50%;
+    opacity: 0;
+    animation: twinkle var(--d, 3s) ease-in-out var(--delay, 0s) infinite;
+  }
+
+  @keyframes twinkle {
+    0%,100% { opacity: 0; transform: scale(1); }
+    50%      { opacity: var(--op, 0.8); transform: scale(1.4); }
+  }
+
+  /* 15 number */
+  .intro-number {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(9rem, 22vw, 18rem);
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    text-shadow:
+      0 0 60px rgba(255,215,0,0.6),
+      0 0 120px rgba(255,215,0,0.3),
+      0 0 200px rgba(255,215,0,0.15);
+    animation: pulse15 3.5s ease-in-out infinite;
+  }
+  @keyframes pulse15 {
+    0%   { transform: scale(1) translateY(0); }
+    40%  { transform: scale(1.04) translateY(-10px); }
+    70%  { transform: scale(0.99) translateY(4px); }
+    100% { transform: scale(1) translateY(0); }
+  }
+
+  /* Intro button */
+  .intro-btn {
+    margin-top: 3rem;
+    padding: 1rem 2.8rem;
+    border: 1px solid var(--beige);
+    background: transparent;
+    color: var(--beige);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    font-weight: 300;
+    letter-spacing: 0.25em;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition: color 0.4s, border-color 0.4s;
+  }
+  .intro-btn::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: var(--beige);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.45s cubic-bezier(.77,0,.18,1);
+  }
+  .intro-btn:hover::before { transform: scaleX(1); }
+  .intro-btn:hover { color: var(--carbon); border-color: var(--beige); }
+  .intro-btn span { position: relative; z-index: 1; }
+
+  /* ══════════════════════════════════════
+     MAIN PAGE
+  ══════════════════════════════════════ */
+  body {
+    background-color: var(--navy);
+    color: var(--beige);
+    font-family: 'Crimson Pro', serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+  #main { min-height: 100vh; }
+
+  /* ── TWD DIAGONAL PATTERN BACKGROUND ── */
+  .twd-bg {
+    position: fixed; inset: 0; z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+    opacity: 1;
+  }
+  .twd-bg svg {
+    width: 100%; height: 100%;
+    opacity: 0.055;
+  }
+
+  /* ── FLOATING PARTICLES ── */
+  .particles { position: fixed; inset: 0; z-index: 1; pointer-events: none; overflow: hidden; }
+  .particle {
+    position: absolute;
+    width: var(--sz, 3px); height: var(--sz, 3px);
+    background: var(--beige);
+    border-radius: 50%;
+    opacity: 0;
+    animation: floatUp var(--dur, 12s) ease-in var(--del, 0s) infinite;
+  }
+  @keyframes floatUp {
+    0%   { opacity: 0; transform: translateY(0) translateX(0); }
+    10%  { opacity: var(--op, 0.4); }
+    90%  { opacity: var(--op, 0.4); }
+    100% { opacity: 0; transform: translateY(-100vh) translateX(var(--dx, 30px)); }
+  }
+
+  /* ── CORNER STARS ── */
+  .corner-stars {
+    position: fixed; top: 0; left: 0; right: 0; height: 220px;
+    z-index: 2; pointer-events: none;
+  }
+  .c-star {
+    position: absolute;
+    font-size: var(--fs, 8px);
+    color: var(--gold);
+    opacity: 0;
+    animation: twinkleGold var(--d, 4s) ease-in-out var(--delay, 0s) infinite;
+  }
+  @keyframes twinkleGold {
+    0%,100% { opacity: 0; }
+    50%      { opacity: var(--op, 0.7); }
+  }
+
+  /* ── CONTENT WRAPPER ── */
+  .content { position: relative; z-index: 3; }
+
+  /* ── HEADER ── */
+  header {
+    text-align: center;
+    padding: 7rem 2rem 5rem;
+    position: relative;
+  }
+  .header-line {
+    width: 1px; height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--beige));
+    margin: 0 auto 2.5rem;
+    opacity: 0;
+    animation: fadeInDown 1.2s ease forwards 0.3s;
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .title-main {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(3rem, 8vw, 6.5rem);
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    color: var(--beige);
+    opacity: 0;
+    animation: fadeUp 1.4s cubic-bezier(.16,1,.3,1) forwards 0.6s;
+    position: relative;
+  }
+  .title-main .gold-accent { color: var(--gold); }
+  .title-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-style: italic;
+    font-weight: 300;
+    color: rgba(244,201,160,0.65);
+    letter-spacing: 0.25em;
+    margin-top: 1.2rem;
+    opacity: 0;
+    animation: fadeUp 1.4s cubic-bezier(.16,1,.3,1) forwards 1s;
+  }
+  .header-ornament {
+    margin-top: 2.5rem;
+    font-size: 1rem;
+    color: var(--gold);
+    opacity: 0;
+    letter-spacing: 0.8em;
+    animation: fadeUp 1.4s ease forwards 1.3s;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    display: flex; align-items: center; gap: 1.2rem;
+    max-width: 600px; margin: 0 auto;
+    padding: 0 2rem;
+    opacity: 0.4;
+  }
+  .divider-line { flex: 1; height: 1px; background: var(--beige); }
+  .divider-gem { font-size: 0.65rem; color: var(--gold); }
+
+  /* ── LETTER SECTION ── */
+  .section-letter {
+    padding: 4rem 1.5rem 6rem;
+    display: flex; justify-content: center;
+  }
+  .card-glass {
+    max-width: 780px; width: 100%;
+    background: var(--glass);
+    border: 1px solid rgba(244,201,160,0.18);
+    border-radius: 4px;
+    padding: clamp(2.5rem, 6vw, 5rem) clamp(2rem, 5vw, 4.5rem);
+    box-shadow:
+      0 0 0 1px rgba(255,215,0,0.04),
+      0 40px 100px rgba(0,0,0,0.6),
+      inset 0 1px 0 rgba(244,201,160,0.1);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(50px);
+    transition: opacity 0.9s ease, transform 0.9s cubic-bezier(.16,1,.3,1);
+  }
+  .card-glass.visible { opacity: 1; transform: translateY(0); }
+
+  .card-glass::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity: 0.5;
+  }
+  .card-glass::after {
+    content: '';
+    position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(244,201,160,0.3), transparent);
+  }
+
+  .letter-tag {
+    display: block;
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 0.4em;
+    color: var(--gold);
+    margin-bottom: 2.5rem;
+    opacity: 0.7;
+  }
+  .letter-body {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+    font-weight: 300;
+    line-height: 2;
+    color: var(--beige);
+    white-space: pre-line;
+  }
+  .letter-body em {
+    font-style: italic;
+    color: rgba(244,201,160,0.9);
+  }
+  .letter-sign {
+    margin-top: 3rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.2rem;
+    color: rgba(244,201,160,0.6);
+    text-align: right;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(244,201,160,0.12);
+  }
+
+  /* ── GALLERY ── */
+  .section-gallery {
+    padding: 4rem 1.5rem 6rem;
+    max-width: 1200px; margin: 0 auto;
+  }
+  .section-title {
+    text-align: center;
+    margin-bottom: 3.5rem;
+  }
+  .section-title h2 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--beige);
+  }
+  .section-title p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: rgba(244,201,160,0.5);
+    margin-top: 0.6rem;
+    letter-spacing: 0.15em;
+  }
+
+  .gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+    gap: 1.2rem;
+  }
+  .photo-slot {
+    aspect-ratio: 4/3;
+    background: var(--glass2);
+    border: 1px dashed rgba(244,201,160,0.2);
+    border-radius: 6px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 0.8rem;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.4s cubic-bezier(.16,1,.3,1);
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .photo-slot.visible {
+    opacity: 1; transform: translateY(0);
+  }
+  .photo-slot:hover {
+    border-color: rgba(244,201,160,0.5);
+    box-shadow: 0 0 30px rgba(255,215,0,0.08), 0 20px 50px rgba(0,0,0,0.4);
+    transform: translateY(-4px) scale(1.01);
+  }
+  .photo-slot img {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 5px;
+    transition: filter 0.4s ease, transform 0.5s ease;
+  }
+  .photo-slot:hover img {
+    filter: brightness(1.05) saturate(0.9);
+    transform: scale(1.03);
+  }
+  .photo-slot .slot-icon {
+    font-size: 2.5rem;
+    opacity: 0.25;
+    color: var(--beige);
+    line-height: 1;
+  }
+  .photo-slot .slot-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.35em;
+    color: rgba(244,201,160,0.3);
+    text-transform: uppercase;
+  }
+  .photo-slot .slot-num {
+    position: absolute; top: 12px; left: 14px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.7rem;
+    color: rgba(244,201,160,0.2);
+    letter-spacing: 0.1em;
+  }
+  /* Gold shimmer on hover */
+  .photo-slot::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, transparent 30%, rgba(255,215,0,0.04) 50%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .photo-slot:hover::after { opacity: 1; }
+
+  /* ── MUSIC PLAYER ── */
+  .music-bar {
+    position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 100;
+    background: rgba(10,14,30,0.9);
+    border: 1px solid rgba(244,201,160,0.2);
+    border-radius: 50px;
+    padding: 0.6rem 1.3rem;
+    display: flex; align-items: center; gap: 0.8rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  .music-bar:hover { transform: translateY(-2px); }
+  .music-note {
+    font-size: 1rem; color: var(--gold); animation: notesPulse 2s ease-in-out infinite;
+  }
+  @keyframes notesPulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
+  .music-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    color: rgba(244,201,160,0.7);
+    max-width: 130px; overflow: hidden;
+    white-space: nowrap; text-overflow: ellipsis;
+  }
+  .music-controls { display: flex; align-items: center; gap: 0.5rem; }
+  .music-btn {
+    background: none; border: none; cursor: pointer;
+    color: var(--beige); font-size: 0.9rem; opacity: 0.7;
+    padding: 0.2rem;
+    transition: opacity 0.2s, transform 0.2s;
+  }
+  .music-btn:hover { opacity: 1; transform: scale(1.15); }
+  .volume-slider {
+    -webkit-appearance: none;
+    width: 55px; height: 2px;
+    background: rgba(244,201,160,0.25);
+    border-radius: 2px; cursor: pointer;
+    accent-color: var(--gold);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    position: relative;
+  }
+  .footer-star {
+    font-size: 0.9rem; color: var(--gold); opacity: 0.6;
+    display: block; margin-bottom: 1.5rem;
+    letter-spacing: 0.8em;
+  }
+  .footer-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: rgba(244,201,160,0.35);
+    letter-spacing: 0.15em;
+  }
+
+  /* ── SCROLL ANIMATIONS ── */
+  .reveal {
+    opacity: 0; transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.16,1,.3,1);
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 600px) {
+    .gallery-grid { grid-template-columns: 1fr 1fr; }
+    .music-bar { bottom: 1rem; right: 1rem; left: 1rem; border-radius: 12px; }
+    .music-title { max-width: 90px; }
+    .volume-slider { width: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     INTRO SCREEN
+══════════════════════════════════ -->
+<div id="intro">
+  <div class="intro-stars" id="introStars"></div>
+  <div class="intro-number">15</div>
+  <button class="intro-btn" id="enterBtn"><span>La mejor carta que vas a ver</span></button>
+</div>
+
+<!-- ══════════════════════════════════
+     MAIN PAGE (hidden until intro)
+══════════════════════════════════ -->
+<div id="main" style="display:none;">
+
+  <!-- TWD Background Pattern -->
+  <div class="twd-bg" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+      <defs>
+        <!-- Diagonal repeating tile ~75px = ~2cm @96dpi -->
+        <pattern id="twdPat" x="0" y="0" width="200" height="200" patternUnits="userSpaceOnUse" patternTransform="rotate(-40)">
+          <!-- Sheriff hat outline -->
+          <g fill="none" stroke="#8899BB" stroke-width="1" opacity="0.8">
+            <path d="M30,60 Q30,45 40,42 L60,40 Q70,39 80,42 Q90,45 90,60 L85,65 Q70,58 50,58 Q30,58 30,65 Z"/>
+            <line x1="24" y1="66" x2="96" y2="66" stroke-width="1.5"/>
+            <ellipse cx="60" cy="66" rx="36" ry="5" stroke-width="1"/>
+          </g>
+          <!-- Wings -->
+          <g fill="none" stroke="#7788AA" stroke-width="0.8" opacity="0.7" transform="translate(110,20)">
+            <path d="M0,20 C-8,10 -20,5 -30,8 C-18,12 -8,18 0,20Z"/>
+            <path d="M0,20 C8,10 20,5 30,8 C18,12 8,18 0,20Z"/>
+            <path d="M0,20 C-5,30 -15,35 -22,32 C-12,28 -5,24 0,20Z"/>
+            <path d="M0,20 C5,30 15,35 22,32 C12,28 5,24 0,20Z"/>
+            <circle cx="0" cy="20" r="2" fill="#7788AA"/>
+          </g>
+          <!-- Crosshatch silhouette (walker) -->
+          <g stroke="#6677AA" stroke-width="0.6" opacity="0.5" transform="translate(20,110)">
+            <ellipse cx="20" cy="8" rx="8" ry="8" fill="none"/>
+            <line x1="20" y1="16" x2="20" y2="45"/>
+            <line x1="20" y1="24" x2="8" y2="38"/>
+            <line x1="20" y1="24" x2="32" y2="38"/>
+            <line x1="20" y1="45" x2="12" y2="62"/>
+            <line x1="20" y1="45" x2="28" y2="62"/>
+          </g>
+          <!-- Quotes -->
+          <text x="105" y="100" font-family="Georgia,serif" font-size="7.5" fill="#8899BB" opacity="0.9">"We don't kill the living"</text>
+          <text x="0" y="175" font-family="Georgia,serif" font-size="7" fill="#7788AA" opacity="0.8">¿Están vivos?</text>
+          <text x="110" y="160" font-family="Georgia,serif" font-size="6.5" fill="#6677AA" opacity="0.7">Sobrevivir · Confiar · Seguir</text>
+          <!-- Katana silhouette -->
+          <g stroke="#7788AA" stroke-width="0.9" opacity="0.6" transform="translate(155,105) rotate(45)">
+            <line x1="0" y1="-35" x2="0" y2="25"/>
+            <line x1="-6" y1="20" x2="6" y2="20"/>
+            <rect x="-3" y="22" width="6" height="12" rx="1" fill="none"/>
+          </g>
+          <!-- Small star sparkle -->
+          <g fill="#FFD700" opacity="0.35" transform="translate(165,45)">
+            <polygon points="0,-6 1.2,-1.2 6,0 1.2,1.2 0,6 -1.2,1.2 -6,0 -1.2,-1.2"/>
+          </g>
+          <g fill="#FFD700" opacity="0.25" transform="translate(80,155)">
+            <polygon points="0,-4 0.8,-0.8 4,0 0.8,0.8 0,4 -0.8,0.8 -4,0 -0.8,-0.8"/>
+          </g>
+        </pattern>
+      </defs>
+      <rect width="100%" height="100%" fill="url(#twdPat)"/>
+    </svg>
+  </div>
+
+  <!-- Floating Particles -->
+  <div class="particles" id="particles"></div>
+
+  <!-- Corner Stars -->
+  <div class="corner-stars" id="cornerStars"></div>
+
+  <!-- ── CONTENT ── -->
+  <div class="content">
+
+    <!-- HEADER -->
+    <header>
+      <div class="header-line"></div>
+      <h1 class="title-main">Felices <span class="gold-accent">15</span></h1>
+      <p class="title-sub">una noche que el tiempo no borrará</p>
+      <div class="header-ornament">✦ &nbsp; ✦ &nbsp; ✦</div>
+    </header>
+
+    <div class="divider reveal">
+      <div class="divider-line"></div>
+      <div class="divider-gem">◆</div>
+      <div class="divider-line"></div>
+    </div>
+
+    <!-- LETTER SECTION -->
+    <!-- ══════════════════════════════════
+         ★ ZONA DE LA CARTA ★
+         Reemplazá el texto entre las comillas
+         del JS más abajo (busca: CARTA_TEXTO)
+    ══════════════════════════════════ -->
+    <section class="section-letter">
+      <div class="card-glass" id="letterCard">
+        <span class="letter-tag">✦ &nbsp; PARA TI &nbsp; ✦</span>
+        <div class="letter-body" id="letterBody">
+          <!-- El texto de la carta se inyecta desde el JS abajo -->
+        </div>
+        <div class="letter-sign" id="letterSign">
+          <!-- La firma también se edita abajo -->
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+      <span class="footer-star">✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦ &nbsp; ✦</span>
+      <p class="footer-text">ya 15 gordi, que vieja estás.</p>
+    </footer>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ══════════════════════════════════
+     MUSIC PLAYER
+     ★ ZONA DE MÚSICA ★
+     Cambiá MUSIC_SRC por la ruta de tu archivo de audio
+     Ej: "musica/16candles.mp3"  o una URL directa
+══════════════════════════════════ -->
+<div class="music-bar" id="musicBar" style="display:none;">
+  <span class="music-note">♪</span>
+  <span class="music-title">16 Candles</span>
+  <div class="music-controls">
+    <button class="music-btn" id="playPauseBtn" title="Play/Pause">▶</button>
+    <input class="volume-slider" id="volSlider" type="range" min="0" max="1" step="0.05" value="0.7">
+  </div>
+</div>
+
+<audio id="bgAudio" loop>
+  <!-- ★★★ CAMBIÁ ESTA RUTA POR TU ARCHIVO DE AUDIO ★★★ -->
+  <!-- Ejemplo local: <source src="16candles.mp3" type="audio/mpeg"> -->
+  <!-- Ejemplo URL:   <source src="https://tu-dominio.com/16candles.mp3" type="audio/mpeg"> -->
+  <source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+/* ══════════════════════════════════════════════
+   ★★★ EDITÁ AQUÍ TU CONTENIDO PERSONALIZADO ★★★
+══════════════════════════════════════════════ */
+
+// ── CARTA ────────────────────────────────────
+// Reemplazá el texto entre los backticks por tu carta.
+// Usá \n para saltos de línea, o simplemente presioná Enter.
+// Las frases entre <em>...</em> aparecen en itálica con un tono diferente.
+const CARTA_TEXTO = `<!-- AQUÍ VA MI CARTA -->
+
+FELIZ QUINCE XIOAMRA SJLKFJF, la verdad no te das una idea lo de agradecido que estoy con tu amistad
+a pesar de que a veces ni nos saludamos y me mires con cara de ojete yo te quiero mucho ♡. De todas las amigas que tengo (ahre que tengo 2, contándote) sos la única con la que me puedo ser una gorda pick me y que en vez de darme cringe me cague de risa, quien diría que en primero te odiaba pq me decías boliviano JAJAJJAJAJAJ y ahora te este haciendo una carta.
+ Por mucho tiempo creía que yo no tenia nada en común con los chavales, pero ahora me doy cuenta que no somos tan diferentes, creo que compartimos mas traumas que gustos pero algo es algo, estos últimos meses no hablamos mucho, pero eso no significa que haya olvidado lo mucho me apoyaste en mi momento mas bajo que tuve, fuiste la única que realmente mostro una preocupación por mi y no hay palabras que te explique lo mucho que agradezco por haberme escuchado y aconsejado, no se como explicar el nudo que se me hace en la garganta con solo pensar con lo mucho que me ayudaste, el como estuviste a mi lado cuando sentía que nadie lo hacia. Lo que mas recuerdo con cariño son las videollamadas randoms que teníamos, las cantidad de pelotucedes que decíamos y como siempre terminábamos hablando de el cara de choclo fan de straykids, de como me ponía el papel de psicólogo y en vez de ayudarte te hacia bullying y las incontables partidas intentado pasa el juego de mrd de roblox mientras hacíamos de gorda choriceras y los chistes pedorros que por alguna razón te daban risa JASAJAJJAS, de como nos burlábamos de los demás a sus espaldas y ni se enteraban.
+ La verdad no se me ocurre nada más para decirte, espero que la pases full chicle bomba en tus fiestas y que nunca olvides que te quiero muchísimo.
+
+- ̶F̶e̶r̶n̶a̶n̶d̶o̶ ̶A̶l̶o̶n̶s̶o̶ ̶J̶R̶
+- Ivanchuelo
+
+
+(Perdón que no fui a tu fiesta sorpresa, pero por alguna razón alma y yo estamos haciendo la guerra fría full contacto cero y no quiero hacerlo incomodo, te amo xio perdón, jijjiijijii)`;
+
+// Firma al pie de la carta
+const CARTA_FIRMA = "Te quiero mucho ♡";
+
+/* ══════════════════════════════════════════════
+   (No necesitás editar nada más abajo)
+══════════════════════════════════════════════ */
+
+// ── INTRO STARS ──
+(function buildIntroStars() {
+  const c = document.getElementById('introStars');
+  for (let i = 0; i < 140; i++) {
+    const s = document.createElement('div');
+    s.className = 'intro-star';
+    const quadrant = i < 70 ? 0 : 1; // left/right upper quadrants
+    s.style.cssText = `
+      left:${quadrant===0 ? Math.random()*45 : 55+Math.random()*45}%;
+      top:${Math.random()*55}%;
+      --d:${2+Math.random()*4}s;
+      --delay:${Math.random()*5}s;
+      --op:${0.3+Math.random()*0.7};
+      width:${1+Math.random()*2.5}px;
+      height:${1+Math.random()*2.5}px;
+    `;
+    c.appendChild(s);
+  }
+})();
+
+// ── ENTER TRANSITION ──
+document.getElementById('enterBtn').addEventListener('click', function() {
+  const intro  = document.getElementById('intro');
+  const main   = document.getElementById('main');
+  const audio  = document.getElementById('bgAudio');
+  const volS   = document.getElementById('volSlider');
+  const bar    = document.getElementById('musicBar');
+  const ppBtn  = document.getElementById('playPauseBtn');
+
+  // ★ Reproducir música EXACTAMENTE en el click del usuario
+  // Los navegadores solo permiten audio si viene de una acción directa del usuario
+  audio.volume = parseFloat(volS.value);
+  const playPromise = audio.play();
+  if (playPromise !== undefined) {
+    playPromise.then(() => {
+      ppBtn.textContent = '⏸';
+    }).catch(() => {
+      ppBtn.textContent = '▶';
+    });
+  }
+  bar.style.display = 'flex';
+
+  intro.classList.add('fade-out');
+  main.style.display = 'block';
+  setTimeout(triggerReveal, 1400);
+
+  // Desbloqueo extra para iOS (por si necesita un segundo toque)
+  document.body.addEventListener('touchstart', function unlockAudio() {
+    if (audio.paused) {
+      audio.play().then(() => { ppBtn.textContent = '⏸'; }).catch(()=>{});
+    }
+    document.body.removeEventListener('touchstart', unlockAudio);
+  }, { once: true });
+});
+
+// ── RENDER LETTER ──
+document.getElementById('letterBody').innerHTML = CARTA_TEXTO.replace(/\n/g,'<br>');
+document.getElementById('letterSign').textContent = CARTA_FIRMA;
+
+// ── FLOATING PARTICLES ──
+(function buildParticles() {
+  const c = document.getElementById('particles');
+  for (let i = 0; i < 35; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `
+      left:${Math.random()*100}%;
+      top:${60+Math.random()*40}%;
+      --sz:${1+Math.random()*3}px;
+      --dur:${10+Math.random()*18}s;
+      --del:${Math.random()*15}s;
+      --op:${0.1+Math.random()*0.35};
+      --dx:${-30+Math.random()*60}px;
+    `;
+    c.appendChild(p);
+  }
+})();
+
+// ── CORNER STARS ──
+(function buildCornerStars() {
+  const c = document.getElementById('cornerStars');
+  const positions = [
+    {l:'2%',t:'8px'},{l:'5%',t:'30px'},{l:'8%',t:'10px'},{l:'3%',t:'60px'},
+    {l:'11%',t:'45px'},{l:'1%',t:'90px'},{l:'6%',t:'80px'},{l:'13%',t:'20px'},
+    {r:'2%',t:'8px'},{r:'5%',t:'30px'},{r:'8%',t:'10px'},{r:'3%',t:'60px'},
+    {r:'11%',t:'45px'},{r:'1%',t:'90px'},{r:'6%',t:'80px'},{r:'13%',t:'20px'},
+  ];
+  positions.forEach(p => {
+    const s = document.createElement('div');
+    s.className = 'c-star';
+    s.textContent = ['✦','✧','★','·'][Math.floor(Math.random()*4)];
+    const fs = 6+Math.random()*10;
+    let css = `top:${p.t};--d:${2+Math.random()*4}s;--delay:${Math.random()*5}s;--op:${0.4+Math.random()*0.5};--fs:${fs}px;font-size:${fs}px;`;
+    if(p.l) css += `left:${p.l};`;
+    if(p.r) css += `right:${p.r};`;
+    s.style.cssText = css;
+    c.appendChild(s);
+  });
+})();
+
+// ── MUSIC CONTROLS ──
+const audio   = document.getElementById('bgAudio');
+const ppBtn   = document.getElementById('playPauseBtn');
+const volSlid = document.getElementById('volSlider');
+
+ppBtn.addEventListener('click', () => {
+  if (audio.paused) {
+    audio.play(); ppBtn.textContent = '⏸';
+  } else {
+    audio.pause(); ppBtn.textContent = '▶';
+  }
+});
+volSlid.addEventListener('input', () => { audio.volume = parseFloat(volSlid.value); });
+
+// ── SCROLL REVEAL ──
+function triggerReveal() {
+  const elements = document.querySelectorAll('.reveal, .card-glass, .photo-slot');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, idx) => {
+      if (e.isIntersecting) {
+        // Stagger gallery slots
+        const delay = e.target.classList.contains('photo-slot')
+          ? Array.from(document.querySelectorAll('.photo-slot')).indexOf(e.target) * 80
+          : 0;
+        setTimeout(() => e.target.classList.add('visible'), delay);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+  elements.forEach(el => io.observe(el));
+}
+
+// If somehow main is already visible
+if (document.getElementById('main').style.display !== 'none') {
+  triggerReveal();
+}
+</script>
+</body>
+</html>
